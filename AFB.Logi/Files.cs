@@ -16,8 +16,13 @@
             string input = File.ReadAllText("input.txt");
             input = input.ToLower();
             if (IsInafCuters(input)) return input.Split(new char[] { '|' });
-            else writer.PrintError("Ошибка: в фаёле отсутствуют все необходимые компoненты.");
+            else writer.PrintError("Ошибка: в файле отсутствуют все необходимые компoненты.");
             return null;
+        }
+        public void SaveExpression(int xStart, int xEnd, int xStep, string function)
+        {
+            var functionToSave = function + '|' + xStart.ToString() + '|' + xEnd.ToString() + '|' + xStep.ToString();
+            File.WriteAllText("input.txt", functionToSave);
         }
         private bool IsInafCuters(string input)
         {

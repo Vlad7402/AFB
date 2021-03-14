@@ -1,0 +1,40 @@
+﻿<Window x:Class="AFB.Desktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AFB.Desktop"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="924">
+    <Canvas x:Name="GRMainWindow">
+        <TextBox x:Name="TBFunction" Text="y=x" Canvas.Left="113" Canvas.Top="9" Width="93"/>
+
+        <TextBlock Height="17" Canvas.Left="10" Canvas.Top="10" Width="103" Text="Введите функцию:"/>
+
+        <TextBlock Height="17" Canvas.Left="230" Canvas.Top="9" Width="175" Text="Введите начальное значение x:"/>
+
+        <TextBox x:Name="TBXStart" Text="0" Canvas.Left="405" Canvas.Top="9" Width="40"/>
+
+        <TextBlock Height="17" Canvas.Left="470" Canvas.Top="10" Width="168" Text="Введите конечное значение x:"/>
+
+        <TextBox x:Name="TBXEnd" Text="1" Canvas.Left="638" Canvas.Top="9" Width="40"/>
+
+        <TextBlock Height="17" Canvas.Left="706" Canvas.Top="9" Width="136" Text="Введите шаг значений x:"/>
+
+        <TextBox x:Name="TBXStep" Text="1" Canvas.Left="847" Canvas.Top="9" Width="40"/>
+
+        <Button x:Name="BTCount" Height="49" Width="77" Canvas.Left="10" Canvas.Top="32" Content="Посчитать"/>
+
+        <TextBlock Height="17" Canvas.Left="10" Canvas.Top="86" Width="88" Text="Y начальное:"/>
+
+        <TextBlock Height="17" Canvas.Left="10" Canvas.Top="108" Width="88" Text="Y конечное:"/>
+
+        <TextBlock Height="17" Canvas.Left="10" Canvas.Top="130" Width="88" Text="Функция в ОПЗ"/>
+
+        <TextBlock x:Name="TBRPNFunction" Height="17" Canvas.Left="113" Canvas.Top="130" Width="136"/>
+
+        <TextBlock x:Name="TBYEnd" Height="17" Canvas.Left="113" Canvas.Top="108" Width="136"/>
+
+        <TextBlock x:Name="TBYStart" Height="17" Canvas.Left="113" Canvas.Top="86" Width="136"/>
+    </Canvas>
+</Window>
