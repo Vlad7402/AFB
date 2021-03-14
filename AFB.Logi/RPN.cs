@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace AFB.logic
 {
+    //Да, возвращает строку, да, так нельзя, да, ОПЗ написана через одно место. Обязательно когда-нибудь переделаю :)
     public class RPN
     {
         private readonly IWriter writer;
