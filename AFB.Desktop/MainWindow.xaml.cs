@@ -66,5 +66,62 @@ namespace AFB.Desktop
             TBError.Visibility = Visibility.Hidden;
             BTClearError.Visibility = Visibility.Hidden;
         }
+        private void GraphicFildSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            RedrawGraphic();
+        }
+
+        private void RedrawGraphic()
+        {
+            CanGraphicFild.Children.Clear();
+
+            var xAsic = new Line();
+            xAsic.X1 = 0;
+            xAsic.X2 = CanGraphicFild.ActualWidth;
+            xAsic.Y1 = CanGraphicFild.ActualHeight / 2;
+            xAsic.Y2 = xAsic.Y1;
+            xAsic.Stroke = Brushes.Black;
+            xAsic.StrokeThickness = 1;
+
+            var yAsic = new Line();
+            yAsic.X1 = CanGraphicFild.ActualWidth/2;
+            yAsic.X2 = CanGraphicFild.ActualWidth /2;
+            yAsic.Y1 = CanGraphicFild.ActualHeight;
+            yAsic.Y2 = 0;
+            yAsic.Stroke = Brushes.Black;
+            yAsic.StrokeThickness = 1;
+
+            var xTriangle = new Polygon();
+            xTriangle.Points.Add(new Point(CanGraphicFild.ActualWidth, CanGraphicFild.ActualHeight / 2));
+            xTriangle.Points.Add(new Point(CanGraphicFild.ActualWidth -10, CanGraphicFild.ActualHeight / 2 + 5));
+            xTriangle.Points.Add(new Point(CanGraphicFild.ActualWidth - 10, CanGraphicFild.ActualHeight / 2 - 5));
+            xTriangle.Fill = Brushes.Black;
+
+            var yTriangle = new Polygon();
+            yTriangle.Points.Add(new Point(CanGraphicFild.ActualWidth / 2, 0));
+            yTriangle.Points.Add(new Point(CanGraphicFild.ActualWidth / 2 - 5,  10));
+            yTriangle.Points.Add(new Point(CanGraphicFild.ActualWidth / 2 + 5,  10));
+            yTriangle.Fill = Brushes.Black;
+
+            var TBXLable = new TextBlock();
+            TBXLable.Margin = new Thickness(CanGraphicFild.ActualWidth - 12, CanGraphicFild.ActualHeight / 2 + 6, 0, CanGraphicFild.ActualHeight / 2 + 18);
+            TBXLable.Text = "X";
+
+            var TBYLable = new TextBlock();
+            TBYLable.Margin = new Thickness(CanGraphicFild.ActualWidth/2 - 12, 0, CanGraphicFild.ActualWidth / 2, CanGraphicFild.ActualHeight - 6);
+            TBYLable.Text = "Y";
+
+            var TBZeroLable = new TextBlock();
+            TBZeroLable.Margin = new Thickness(CanGraphicFild.ActualWidth / 2 - 10 , CanGraphicFild.ActualHeight / 2 + 4, CanGraphicFild.ActualWidth / 2 + 4, CanGraphicFild.ActualHeight / 2 - 10);
+            TBZeroLable.Text = "0";
+
+            CanGraphicFild.Children.Add(xAsic);
+            CanGraphicFild.Children.Add(yAsic);
+            CanGraphicFild.Children.Add(xTriangle);
+            CanGraphicFild.Children.Add(yTriangle);
+            CanGraphicFild.Children.Add(TBXLable);
+            CanGraphicFild.Children.Add(TBYLable);
+            CanGraphicFild.Children.Add(TBZeroLable);
+        }
     }
 }

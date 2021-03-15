@@ -5,12 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AFB.Desktop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="924">
+        Title="AFB" Height="450" Width="924">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" MinHeight="154"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <Canvas x:Name="CanMainWindow" Grid.Row="0" Grid.Column="0">
+        <Canvas x:Name="CanInputPart" Grid.Row="0" Grid.Column="0" Margin="0,0,0,2">
             <TextBox x:Name="TBFunction" Text="y=x" Canvas.Left="113" Canvas.Top="9" Width="93"/>
 
             <TextBlock Height="17" Canvas.Left="10" Canvas.Top="10" Width="103" Text="Введите функцию:"/>
@@ -33,7 +34,7 @@
 
             <TextBlock Height="17" Canvas.Left="10" Canvas.Top="108" Width="88" Text="Y конечное:"/>
 
-            <TextBlock Height="17" Canvas.Left="10" Canvas.Top="130" Width="88" Text="Функция в ОПЗ"/>
+            <TextBlock Height="17" Canvas.Left="10" Canvas.Top="130" Width="88" Text="Функция в ОПЗ:"/>
 
             <TextBlock x:Name="TBRPNFunction" Height="17" Canvas.Left="113" Canvas.Top="130" Width="136"/>
 
@@ -41,9 +42,17 @@
 
             <TextBlock x:Name="TBYStart" Height="17" Canvas.Left="113" Canvas.Top="86" Width="136"/>
 
-            <TextBlock x:Name="TBError" Height="61" Canvas.Left="550" Canvas.Top="86" Width="320" Background="Red" Visibility="Hidden"/>
+            <TextBlock x:Name="TBError" Height="61" Canvas.Left="550" Canvas.Top="42" Width="320" Background="Red" Visibility="Hidden"/>
 
-            <Button x:Name="BTClearError" Height="29" Width="320" Canvas.Left="550" Canvas.Top="152" Content="Удалить сообщение об ошибке" Background="Tomato" Visibility="Hidden"/>
+            <Button x:Name="BTClearError" Height="29" Width="320" Canvas.Left="550" Canvas.Top="113" Content="Удалить сообщение об ошибке" Background="Tomato" Visibility="Hidden"/>
         </Canvas>
+        <DockPanel Grid.Row="1" Grid.Column="0" Margin="10,0,10,10">
+            <Border BorderBrush="Black" 
+                    BorderThickness="1">
+                <Canvas x:Name="CanGraphicFild" SizeChanged="GraphicFildSizeChanged">
+
+                </Canvas>
+            </Border>
+        </DockPanel>
     </Grid>
 </Window>
