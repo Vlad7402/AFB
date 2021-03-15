@@ -19,7 +19,7 @@
             else writer.PrintError("Ошибка: в файле отсутствуют все необходимые компoненты.");
             return null;
         }
-        public void SaveExpression(int xStart, int xEnd, int xStep, string function)
+        public void SaveExpression(double xStart, double xEnd, double xStep, string function)
         {
             var functionToSave = function + '|' + xStart.ToString() + '|' + xEnd.ToString() + '|' + xStep.ToString();
             File.WriteAllText("input.txt", functionToSave);
@@ -48,6 +48,7 @@
         public double[] GetArgumentVels(double velStart, double velEnd, double step)
         {
             List<double> result = new List<double>();
+            result.Add(velStart);
             for (double i = velStart; i < velEnd; i++)
             {
                 result.Add(velStart + step);
