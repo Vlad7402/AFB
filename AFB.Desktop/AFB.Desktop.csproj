@@ -95,8 +95,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AFB.Logi\AFB.Logic.csproj">
-      <Project>{5fa700d7-25ec-447e-91df-24e5fc3d8009}</Project>
+    <ProjectReference Include="..\AFB.Logic\AFB.Logic.csproj">
+      <Project>{a624b0c3-091b-45d1-97ac-61ab1b814b11}</Project>
       <Name>AFB.Logic</Name>
     </ProjectReference>
   </ItemGroup>
