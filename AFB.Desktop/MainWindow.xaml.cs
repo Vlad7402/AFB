@@ -69,7 +69,7 @@ namespace AFB.Desktop
 
         public void PrintTable(string[] table)
         {
-            throw new NotImplementedException();          
+            throw new NotImplementedException();
         }
         private void DeleteError(object sender, RoutedEventArgs e)
         {
@@ -107,14 +107,14 @@ namespace AFB.Desktop
 
             var xTriangle = new Polygon();
             xTriangle.Points.Add(new Point(CanGraphicFild.ActualWidth, CanGraphicFild.ActualHeight / 2));
-            xTriangle.Points.Add(new Point(CanGraphicFild.ActualWidth -10, CanGraphicFild.ActualHeight / 2 + 5));
+            xTriangle.Points.Add(new Point(CanGraphicFild.ActualWidth - 10, CanGraphicFild.ActualHeight / 2 + 5));
             xTriangle.Points.Add(new Point(CanGraphicFild.ActualWidth - 10, CanGraphicFild.ActualHeight / 2 - 5));
             xTriangle.Fill = Brushes.Black;
 
             var yTriangle = new Polygon();
             yTriangle.Points.Add(new Point(CanGraphicFild.ActualWidth / 2, 0));
-            yTriangle.Points.Add(new Point(CanGraphicFild.ActualWidth / 2 - 5,  10));
-            yTriangle.Points.Add(new Point(CanGraphicFild.ActualWidth / 2 + 5,  10));
+            yTriangle.Points.Add(new Point(CanGraphicFild.ActualWidth / 2 - 5, 10));
+            yTriangle.Points.Add(new Point(CanGraphicFild.ActualWidth / 2 + 5, 10));
             yTriangle.Fill = Brushes.Black;
 
             var TBXLable = new TextBlock
@@ -205,15 +205,15 @@ namespace AFB.Desktop
                 pointsCollection.Add(GetPointForGraphic(maxX, maxY, valuemsOfX[i], valuemsOfY[i]));
             }
 
-            return new Polyline{ Points = pointsCollection }; 
+            return new Polyline { Points = pointsCollection };
         }
         private Point GetPointForGraphic(double maxX, double maxY, double xValue, double yValue)
         {
-            return new Point(GetCoordinateForPoint(CanGraphicFild.ActualWidth, maxX, xValue, zoomX),  GetCoordinateForPoint(CanGraphicFild.ActualHeight, maxY, -yValue, zoomY));
+            return new Point(GetCoordinateForPoint(CanGraphicFild.ActualWidth, maxX, xValue, zoomX), GetCoordinateForPoint(CanGraphicFild.ActualHeight, maxY, -yValue, zoomY));
         }
         private double GetCoordinateForPoint(double widthOrHeight, double maxValue, double currentValue, double zoom)
         {
-            return ((currentValue / maxValue * widthOrHeight / 2) + widthOrHeight / 2)* zoom * zoomMain;
+            return ((currentValue / maxValue * widthOrHeight / 2) + widthOrHeight / 2) * zoom * zoomMain;
         }
         private void SBZoomChanged(object sender, DependencyPropertyChangedEventArgs e)
         {

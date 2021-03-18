@@ -6,8 +6,4 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\AFB.Logic\AFB.Logic.csproj" />
-  </ItemGroup>
-
 </Project>
