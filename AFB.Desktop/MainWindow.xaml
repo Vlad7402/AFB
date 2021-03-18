@@ -22,12 +22,12 @@
                     </TransformGroup>
                 </ScrollBar.RenderTransform>
             </ScrollBar>
-            <TextBox x:Name="TBFunction" Text="y=x" Canvas.Left="113" Canvas.Top="9" Width="93"/>
+            <TextBox x:Name="TBFunction" Text="y=c x" Canvas.Left="113" Canvas.Top="9" Width="93"/>
             <TextBlock Height="17" Canvas.Left="10" Canvas.Top="10" Width="103" Text="Введите функцию:"/>
             <TextBlock Height="17" Canvas.Left="230" Canvas.Top="9" Width="175" Text="Введите начальное значение x:"/>
-            <TextBox x:Name="TBXStart" Text="0" Canvas.Left="405" Canvas.Top="9" Width="40"/>
+            <TextBox x:Name="TBXStart" Text="-900" Canvas.Left="405" Canvas.Top="9" Width="40"/>
             <TextBlock Height="17" Canvas.Left="470" Canvas.Top="10" Width="168" Text="Введите конечное значение x:"/>
-            <TextBox x:Name="TBXEnd" Text="1" Canvas.Left="638" Canvas.Top="9" Width="40"/>
+            <TextBox x:Name="TBXEnd" Text="1800" Canvas.Left="638" Canvas.Top="9" Width="40"/>
             <TextBlock Height="17" Canvas.Left="706" Canvas.Top="9" Width="136" Text="Введите шаг значений x:"/>
             <TextBox x:Name="TBXStep" Text="1" Canvas.Left="847" Canvas.Top="9" Width="40"/>
             <Button x:Name="BTCount" Height="49" Width="77" Canvas.Left="10" Canvas.Top="32" Content="Посчитать"/>

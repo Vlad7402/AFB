@@ -45,7 +45,7 @@ namespace AFB.Desktop
             files.SaveExpression(xStart, xEnd, xStep, function);
             var expression = new logic.Expression(this);
             ShowFunctionInformation(expression);
-            var valuemsOfY = expression.GetValuemsOfY();
+            var valuemsOfY = expression.ValuemsOfY;
             if (valuemsOfY.Length > 1)
             {
                 isGrapticAvailable = true;
@@ -61,7 +61,7 @@ namespace AFB.Desktop
         }
         private void ShowFunctionInformation(logic.Expression expression)
         {
-            var yValuems = expression.GetValuemsOfY();
+            var yValuems = expression.ValuemsOfY;
             TBYStart.Text = yValuems[0].ToString();
             TBYEnd.Text = yValuems[yValuems.Length - 1].ToString();
             TBRPNFunction.Text = expression.RPNExpression;
@@ -149,11 +149,19 @@ namespace AFB.Desktop
 
             if (isGrapticAvailable)
             {
-                var line = GetGraphic();
+                var expression = new logic.Expression(this);
+
+                var lables = GetLablesForNotches(CanGraphicFild, expression);
+
+                foreach (var lable in lables)
+                    CanGraphicFild.Children.Add(lable);
+
+                var line = GetGraphic(expression);
                 line.Stroke = Brushes.Black;
                 line.StrokeThickness = 1;
                 CanGraphicFild.Children.Add(line);
             }
+
         }
         private List<Line> GetNotches(Canvas grathicFild)
         {
@@ -191,13 +199,47 @@ namespace AFB.Desktop
 
             return notches;
         }
-
-        private Polyline GetGraphic()
+        private List<TextBlock> GetLablesForNotches(Canvas grathicFild, logic.Expression expression)
         {
-            var expression = new logic.Expression(this);
+            var lables = new List<TextBlock>();
+            var maxX = GetAbsolutMax(expression.ValuemsOfX);
+            for (int i = 1; i < 20; i++)
+            {
+                if (i == 10) continue;
+
+                var xValue = Math.Round(-(maxX-(maxX / 10 *i)), 3);
+
+                var xLable = new TextBlock
+                {
+                    Margin = new Thickness(grathicFild.ActualWidth / 20 * i - 7, grathicFild.ActualHeight / 2 + 6, grathicFild.ActualWidth / 20 * (20 - i) - 7, grathicFild.ActualHeight / 2 - 12),
+                    Text = xValue.ToString()
+                };
+                lables.Add(xLable);
+            }
+
+            var maxY = GetAbsolutMax(expression.ValuemsOfY);
+
+            for (int i = 1; i < 20; i++)
+            {
+                if (i == 10) continue;
+
+                var yValue = Math.Round(((-maxY +(maxY / 10 * i))*-1), 3);
+
+                var yLable = new TextBlock
+                {
+                    Margin = new Thickness(grathicFild.ActualWidth /2 + 6, grathicFild.ActualHeight / 20 * i - 6, grathicFild.ActualWidth / 2 - 15, grathicFild.ActualHeight / 20 * (20 - i) - 6),
+                    Text = yValue.ToString()
+                };
+                lables.Add(yLable);
+            }
+            return lables;
+        }
+
+        private Polyline GetGraphic(logic.Expression expression)
+        {
             var pointsCollection = new PointCollection();
             var valuemsOfX = expression.ValuemsOfX;
-            var valuemsOfY = expression.GetValuemsOfY();
+            var valuemsOfY = expression.ValuemsOfY;
             var maxX = GetAbsolutMax(valuemsOfX);
             var maxY = GetAbsolutMax(valuemsOfY);
             for (int i = 0; i < valuemsOfX.Length; i++)

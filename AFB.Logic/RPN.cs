@@ -177,8 +177,8 @@ namespace AFB.logic
         }
         private double GetFactorial(double val)
         {
-            double result = 1;
-            for (int i = 1; i < val; i++)
+            int result = 1;
+            for (int i = 1; i <= (int)val; i++)
             {
                 result *= i;
             }
@@ -186,7 +186,7 @@ namespace AFB.logic
         }
         private bool IsFactorialAvaliable(double val)
         {
-            if (val > 150) return true;
+            if (val < 150) return true;
             else
             {
                 writer.PrintError("Ошибка: превышение максималного значения для факториала(150) или значение равно 0");
