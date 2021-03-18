@@ -156,11 +156,11 @@ namespace AFB.logic
                 case '-': result = secNum - firstNum; break;
                 case '*': result = secNum * firstNum; break;
                 case '/': if (IsDevisionAvaliable(firstNum)) result = secNum / firstNum; break;
-                case 's': Math.Sin(firstNum * Math.PI / 180); break;
-                case 'c': Math.Cos(firstNum * Math.PI / 180); break;
-                case 't': Math.Tan(firstNum * Math.PI / 180); break;
-                case 'l': Math.Log(firstNum); break;
-                case '!': if (IsFactorialAvaliable(firstNum)) GetFactorial(firstNum); break;
+                case 's': result = Math.Sin(firstNum * Math.PI / 180); break;
+                case 'c': result = Math.Cos(firstNum * Math.PI / 180); break;
+                case 't': result = Math.Tan(firstNum * Math.PI / 180); break;
+                case 'l': result = Math.Log(firstNum); break;
+                case '!': if (IsFactorialAvaliable(firstNum)) result = GetFactorial(firstNum); break;
                 case '^': result = Math.Pow(secNum, firstNum); break;
             }
             return result;
