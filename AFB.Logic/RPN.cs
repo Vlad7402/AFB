@@ -169,11 +169,7 @@ namespace AFB.logic
         {
             if (val != 0) return true;
             else
-            {
-                writer.PrintError("Ошибка: деление на 0");
-                Environment.Exit(0);
-                return false;
-            }
+                throw new Exception("Деление на ноль");
         }
         private double GetFactorial(double val)
         {
@@ -239,13 +235,13 @@ namespace AFB.logic
         }
         public bool DoesEndExist(double velStart, double velEnd, double step)
         {
-            if (velStart < velEnd && Math.Sign(step) == -1) writer.PrintError("Ошибка: количество значений X превышает 10000");
-            else if (velStart > velEnd && Math.Sign(step) == 1) writer.PrintError("Ошибка: количество значений X превышает 10000");
-            else if (Math.Sign(step) == 0) writer.PrintError("Ошибка: количество значений X превышает 10000");
-            for (double i = velStart; i < velEnd; i++)
+            if (velStart < velEnd && Math.Sign(step) == -1) throw new Exception("Ошибка: количество значений X превышает 100000");
+            else if (velStart > velEnd && Math.Sign(step) == 1) throw new Exception("Ошибка: количество значений X превышает 100000");
+            else if (Math.Sign(step) == 0) throw new Exception("Ошибка: количество значений X превышает 100000");
+            for (int i = 0; velStart < velEnd; i++)
             {
                 velStart += step;
-                if (i > 10000) writer.PrintError("Ошибка: количество значений X превышает 10000");
+                if (i > 100000) throw new Exception("Ошибка: количество значений X превышает 100000");
             }
             return true;
         }

@@ -42,7 +42,7 @@
         }
         public double DoubleParser(string input)
         {
-            if (!double.TryParse(input, out double result)) writer.PrintError("Ошибка: невозможно преобразовать значение X начальное, X конечное или шаг в нужный формат.");
+            if (!double.TryParse(input, out double result)) throw new Exception("Ошибка: невозможно преобразовать значение X начальное, X конечное или шаг в нужный формат.");
             return result;
         }
         public double[] GetArgumentVels(double velStart, double velEnd, double step)
