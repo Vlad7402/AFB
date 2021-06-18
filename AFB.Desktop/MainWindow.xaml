@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AFB.Desktop"
         mc:Ignorable="d"
-        Title="AFB" Height="450" Width="924">
+        Title="AFB" Height="720" Width="1080">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" MinHeight="154"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" MinHeight="193"/>
+            <RowDefinition Height="499*"/>
+            <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
-        <Canvas x:Name="CanInputPart" Grid.Row="0" Grid.Column="0" Margin="0,0,0,2">
-            <ScrollBar x:Name="SBZoomMain" Height="100" Canvas.Left="270" Canvas.Top="80" Width="20" Minimum="0.01" Maximum="100" Value="1" SmallChange="0.01" LargeChange="0.1" IsMouseCaptureWithinChanged="SBZoomChanged" Visibility="Hidden">
+        <Canvas x:Name="CanInputPart" Grid.Row="0" Grid.Column="0" Margin="0,0,0,1">
+            <ScrollBar x:Name="SBZoomMain" Height="100" Canvas.Left="270" Canvas.Top="80" Width="20" Minimum="0.1" Maximum="10" Value="10" SmallChange="0.1" LargeChange="0.5" IsMouseCaptureWithinChanged="SBZoomChanged">
                 <ScrollBar.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -22,24 +23,34 @@
                     </TransformGroup>
                 </ScrollBar.RenderTransform>
             </ScrollBar>
+            <TextBlock Height="20" Canvas.Left="390" Canvas.Top="90" Width="60"> Зум оси Y:</TextBlock>
+            <TextBlock Height="20" Canvas.Left="390" Canvas.Top="120" Width="60">Зум оси X:</TextBlock>
+            <TextBlock Height="20" Canvas.Left="390" Canvas.Top="60" Width="82">Основной зум:</TextBlock>
+            <TextBlock x:Name="TBzoomY" Height="20" Canvas.Left="450" Canvas.Top="90" Width="16">1</TextBlock>
+            <TextBlock x:Name="TBzoomX" Height="20" Canvas.Left="450" Canvas.Top="120" Width="16">1</TextBlock>
+            <TextBlock x:Name="TBzoomMain" Height="20" Canvas.Left="475" Canvas.Top="60" Width="16">1</TextBlock>
             <TextBox x:Name="TBFunction" Text="y=c x" Canvas.Left="113" Canvas.Top="9" Width="93"/>
             <TextBlock Height="17" Canvas.Left="10" Canvas.Top="10" Width="103" Text="Введите функцию:"/>
             <TextBlock Height="17" Canvas.Left="230" Canvas.Top="9" Width="175" Text="Введите начальное значение x:"/>
-            <TextBox x:Name="TBXStart" Text="-900" Canvas.Left="405" Canvas.Top="9" Width="40"/>
+            <TextBox x:Name="TBXStart" Text="-9" Canvas.Left="405" Canvas.Top="9" Width="40"/>
             <TextBlock Height="17" Canvas.Left="470" Canvas.Top="10" Width="168" Text="Введите конечное значение x:"/>
-            <TextBox x:Name="TBXEnd" Text="1800" Canvas.Left="638" Canvas.Top="9" Width="40"/>
+            <TextBox x:Name="TBXEnd" Text="18" Canvas.Left="638" Canvas.Top="9" Width="40"/>
             <TextBlock Height="17" Canvas.Left="706" Canvas.Top="9" Width="136" Text="Введите шаг значений x:"/>
             <TextBox x:Name="TBXStep" Text="1" Canvas.Left="847" Canvas.Top="9" Width="40"/>
             <Button x:Name="BTCount" Height="49" Width="77" Canvas.Left="10" Canvas.Top="32" Content="Посчитать"/>
             <TextBlock Height="17" Canvas.Left="10" Canvas.Top="86" Width="88" Text="Y начальное:"/>
             <TextBlock Height="17" Canvas.Left="10" Canvas.Top="108" Width="88" Text="Y конечное:"/>
             <TextBlock Height="17" Canvas.Left="10" Canvas.Top="130" Width="88" Text="Функция в ОПЗ:"/>
+            <TextBlock Height="17" Canvas.Left="10" Canvas.Top="150" Width="65" Text="Значение Х:"/>
+            <TextBlock Height="17" Canvas.Left="10" Canvas.Top="170" Width="65" Text="Значение Y:"/>
+            <TextBlock x:Name="TBCurrentX" Height="17" Canvas.Left="80" Canvas.Top="150" Width="41"/>
+            <TextBlock x:Name="TBCurrentY" Height="17" Canvas.Left="80" Canvas.Top="170" Width="41"/>
             <TextBlock x:Name="TBRPNFunction" Height="17" Canvas.Left="113" Canvas.Top="130" Width="136"/>
             <TextBlock x:Name="TBYEnd" Height="17" Canvas.Left="113" Canvas.Top="108" Width="136"/>
             <TextBlock x:Name="TBYStart" Height="17" Canvas.Left="113" Canvas.Top="86" Width="136"/>
-            <TextBlock x:Name="TBError" Height="61" Canvas.Left="550" Canvas.Top="42" Width="320" Background="Red" Visibility="Hidden"/>
+            <TextBlock x:Name="TBError" Height="61" Canvas.Left="550" Canvas.Top="42" Width="320" Background="Red" TextWrapping="Wrap" Visibility="Hidden"/>
             <Button x:Name="BTClearError" Height="29" Width="320" Canvas.Left="550" Canvas.Top="113" Content="Удалить сообщение об ошибке" Background="Tomato" Visibility="Hidden"/>
-            <ScrollBar x:Name="SBZoomX" Height="100" Canvas.Left="270" Canvas.Top="140" Width="20"  Minimum="0.01" Maximum="100" Value="1" SmallChange="0.01" LargeChange="0.1" IsMouseCaptureWithinChanged="SBZoomChanged" Visibility="Hidden">
+            <ScrollBar x:Name="SBZoomX" Height="100" Canvas.Left="270" Canvas.Top="140" Width="20"  Minimum="0.1" Maximum="10" Value="10" SmallChange="0.1" LargeChange="0.5" IsMouseCaptureWithinChanged="SBZoomChanged">
                 <ScrollBar.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -49,7 +60,7 @@
                     </TransformGroup>
                 </ScrollBar.RenderTransform>
             </ScrollBar>
-            <ScrollBar x:Name="SBZoomY" Height="100" Canvas.Left="270" Canvas.Top="90" Width="20"  Minimum="0.01" Maximum="100" Value="1" SmallChange="0.01" LargeChange="0.1" IsMouseCaptureWithinChanged="SBZoomChanged" Visibility="Hidden">
+            <ScrollBar x:Name="SBZoomY" Height="100" Canvas.Left="270" Canvas.Top="90" Width="20"  Minimum="0.1" Maximum="10" Value="1" SmallChange="0.1" LargeChange="0.5" IsMouseCaptureWithinChanged="SBZoomChanged">
                 <ScrollBar.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleY="-1"/>
@@ -60,10 +71,9 @@
                 </ScrollBar.RenderTransform>
             </ScrollBar>
         </Canvas>
-        <DockPanel Grid.Row="1" Grid.Column="0" Margin="10,0,10,10">
-            <Border BorderBrush="Black" 
-                    BorderThickness="1">
-                <Canvas x:Name="CanGraphicFild" SizeChanged="GraphicFildSizeChanged">
+        <DockPanel Grid.Row="1" Grid.Column="0" >
+            <Border BorderBrush="Black" BorderThickness="1" Height="auto" Margin="10,29,10,10">
+                <Canvas x:Name="CanGraphicFild" SizeChanged="GraphicFildSizeChanged" MouseMove="ShowCurrentCoordinte" MouseLeave="ClearCurrentCoordinates" Margin="0,-1,0,-1">
 
                 </Canvas>
             </Border>

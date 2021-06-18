@@ -25,6 +25,7 @@ namespace AFB.Desktop
         private double zoomX = 1;
         private double zoomY = 1;
         private double zoomMain = 1;
+        private double maxX = 0;
         public MainWindow()
         {
             InitializeComponent();
@@ -37,19 +38,26 @@ namespace AFB.Desktop
             var strXStart = TBXStart.Text;
             var strXEnd = TBXEnd.Text;
             var strXStep = TBXStep.Text;
-            var function = TBFunction.Text;
-            var files = new Files(this);
-            var xStart = files.DoubleParser(strXStart);
-            var xEnd = files.DoubleParser(strXEnd);
-            var xStep = files.DoubleParser(strXStep);
-            files.SaveExpression(xStart, xEnd, xStep, function);
-            var expression = new logic.Expression(this);
-            ShowFunctionInformation(expression);
-            var valuemsOfY = expression.ValuemsOfY;
-            if (valuemsOfY.Length > 1)
+            var function = TBFunction.Text;          
+            try
             {
-                isGrapticAvailable = true;
-                RedrawGraphic();
+                var files = new Files(this);
+                var xStart = files.DoubleParser(strXStart);
+                var xEnd = files.DoubleParser(strXEnd);
+                var xStep = files.DoubleParser(strXStep);
+                files.SaveExpression(xStart, xEnd, xStep, function);
+                var expression = new logic.Expression(this);
+                ShowFunctionInformation(expression);
+                var valuemsOfY = expression.ValuemsOfY;
+                if (valuemsOfY.Length > 1)
+                {
+                    isGrapticAvailable = true;
+                    RedrawGraphic();
+                }
+            }              
+            catch (Exception exeption)
+            {
+                PrintError(exeption.Message);
             }
         }
 
@@ -78,13 +86,19 @@ namespace AFB.Desktop
         }
         private void GraphicFildSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            RedrawGraphic();
+            GetExpression(sender, e);
         }
 
         private void RedrawGraphic()
         {
             CanGraphicFild.Children.Clear();
-
+            Polygon whiteBackGround = new Polygon();
+            whiteBackGround.Points.Add(new Point(CanGraphicFild.ActualWidth - 2, CanGraphicFild.ActualHeight - 2));
+            whiteBackGround.Points.Add(new Point(1, CanGraphicFild.ActualHeight - 2));
+            whiteBackGround.Points.Add(new Point(1, 1));
+            whiteBackGround.Points.Add(new Point(CanGraphicFild.ActualWidth - 2, 1));
+            whiteBackGround.Fill = Brushes.White;
+            CanGraphicFild.Children.Add(whiteBackGround);
             var xAsic = new Line
             {
                 X1 = 0,
@@ -156,10 +170,13 @@ namespace AFB.Desktop
                 foreach (var lable in lables)
                     CanGraphicFild.Children.Add(lable);
 
-                var line = GetGraphic(expression);
-                line.Stroke = Brushes.Black;
-                line.StrokeThickness = 1;
-                CanGraphicFild.Children.Add(line);
+                var lines = GetGraphic(expression);
+                foreach (var line in lines)
+                {
+                    line.Stroke = Brushes.Black;
+                    line.StrokeThickness = 1;
+                    CanGraphicFild.Children.Add(line);
+                }
             }
 
         }
@@ -202,7 +219,7 @@ namespace AFB.Desktop
         private List<TextBlock> GetLablesForNotches(Canvas grathicFild, logic.Expression expression)
         {
             var lables = new List<TextBlock>();
-            var maxX = GetAbsolutMax(expression.ValuemsOfX);
+            var maxX = GetAbsolutMax(expression.ValuemsOfX) / (zoomMain * zoomX);
             for (int i = 1; i < 20; i++)
             {
                 if (i == 10) continue;
@@ -217,7 +234,7 @@ namespace AFB.Desktop
                 lables.Add(xLable);
             }
 
-            var maxY = GetAbsolutMax(expression.ValuemsOfY);
+            var maxY = GetAbsolutMax(expression.ValuemsOfY) / (zoomMain * zoomY);
 
             for (int i = 1; i < 20; i++)
             {
@@ -235,35 +252,71 @@ namespace AFB.Desktop
             return lables;
         }
 
-        private Polyline GetGraphic(logic.Expression expression)
+        private List<Polyline> GetGraphic(logic.Expression expression)
         {
-            var pointsCollection = new PointCollection();
+            var pointsCollections = new List<PointCollection>();
             var valuemsOfX = expression.ValuemsOfX;
             var valuemsOfY = expression.ValuemsOfY;
-            var maxX = GetAbsolutMax(valuemsOfX);
-            var maxY = GetAbsolutMax(valuemsOfY);
+            var maxX = GetAbsolutMax(valuemsOfX) / (zoomMain * zoomX);
+            var maxY = GetAbsolutMax(valuemsOfY) / (zoomMain * zoomY);
+            this.maxX = maxX;
             for (int i = 0; i < valuemsOfX.Length; i++)
             {
-                pointsCollection.Add(GetPointForGraphic(maxX, maxY, valuemsOfX[i], valuemsOfY[i]));
-            }
+                var point = GetPointForGraphic(maxX, maxY, valuemsOfX[i], valuemsOfY[i]);
+                if (point.X <= CanGraphicFild.ActualWidth && point.Y <= CanGraphicFild.ActualHeight &&
+                    (point.X >= 0 && point.Y >=0))
+                {
+                    PointCollection points = new PointCollection();
+                    while (point.X <= CanGraphicFild.ActualWidth && point.Y <= CanGraphicFild.ActualHeight &&
+                    (point.X >= 0 && point.Y >= 0))
+                    {
+                        points.Add(point);
+                        i++;
+                        if (i == valuemsOfX.Length)
+                            break;
 
-            return new Polyline { Points = pointsCollection };
+                        point = GetPointForGraphic(maxX, maxY, valuemsOfX[i], valuemsOfY[i]);
+                    }
+                    pointsCollections.Add(points);
+                }
+                else
+                {
+                    while (point.X > CanGraphicFild.ActualWidth || point.Y > CanGraphicFild.ActualHeight ||
+                        point.X < 0 || point.Y < 0)
+                    {
+                        i++;
+                        if (i == valuemsOfX.Length)
+                            break;
+
+                        point = GetPointForGraphic(maxX, maxY, valuemsOfX[i], valuemsOfY[i]);
+                    }
+                }
+            }
+            var lines = new List<Polyline>();
+            foreach (var points in pointsCollections)
+                lines.Add(new Polyline { Points = points });
+
+            return lines;
         }
         private Point GetPointForGraphic(double maxX, double maxY, double xValue, double yValue)
         {
-            return new Point(GetCoordinateForPoint(CanGraphicFild.ActualWidth, maxX, xValue, zoomX), GetCoordinateForPoint(CanGraphicFild.ActualHeight, maxY, -yValue, zoomY));
+            return new Point(GetCoordinateForPoint(CanGraphicFild.ActualWidth, maxX, xValue, zoomX), 
+                             GetCoordinateForPoint(CanGraphicFild.ActualHeight, maxY, -yValue, zoomY));
         }
         private double GetCoordinateForPoint(double widthOrHeight, double maxValue, double currentValue, double zoom)
         {
-            return ((currentValue / maxValue * widthOrHeight / 2) + widthOrHeight / 2) * zoom * zoomMain;
+            return ((currentValue / maxValue * widthOrHeight / 2) + widthOrHeight / 2);
         }
         private void SBZoomChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             // В разработке
-            zoomMain = SBZoomMain.Value;
-            zoomX = SBZoomX.Value;
-            zoomY = SBZoomY.Value;
-            RedrawGraphic();
+            zoomMain = Math.Round(SBZoomMain.Value, 1);
+            TBzoomMain.Text = Math.Round(SBZoomMain.Value, 1).ToString();
+            zoomX =  Math.Round(SBZoomX.Value, 1);
+            TBzoomX.Text = Math.Round(SBZoomX.Value, 1).ToString();
+            zoomY = Math.Round(SBZoomY.Value, 1);
+            TBzoomY.Text = Math.Round(SBZoomY.Value, 1).ToString();
+            GetExpression(null, null);
         }
         private double GetAbsolutMax(double[] input)
         {
@@ -271,6 +324,37 @@ namespace AFB.Desktop
             var min = Math.Abs(input.Min());
             if (min > max) return min;
             return max;
+        }
+
+        private void ShowCurrentCoordinte(object sender, MouseEventArgs e)
+        {
+            if (isGrapticAvailable)
+            {
+                var files = new Files(this);
+                var coordinateX = ((e.GetPosition((IInputElement)sender).X - CanGraphicFild.ActualWidth / 2) 
+                                    / CanGraphicFild.ActualWidth * maxX) * 2;
+                files.SaveExpression(coordinateX, coordinateX + 0.5, 1, TBFunction.Text);
+                var expression = new logic.Expression(this);
+                TBCurrentX.Text = (expression.ValuemsOfX[0]).ToString();
+                TBCurrentY.Text = (expression.ValuemsOfY[0]).ToString();
+                try
+                {
+                    //var expression = new logic.Expression(this);
+                    //TBCurrentX.Text = (expression.ValuemsOfX[0]).ToString();
+                    //TBCurrentY.Text = (expression.ValuemsOfY[0]).ToString();
+                }
+                catch (Exception)
+                {
+                    TBCurrentX.Text = "Err";
+                    TBCurrentY.Text = "Err";
+                }
+            }          
+        }
+
+        private void ClearCurrentCoordinates(object sender, MouseEventArgs e)
+        {
+            TBCurrentX.Text = string.Empty;
+            TBCurrentY.Text = string.Empty;
         }
     }
 }
