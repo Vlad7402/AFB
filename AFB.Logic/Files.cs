@@ -48,12 +48,13 @@
         public double[] GetArgumentVels(double velStart, double velEnd, double step)
         {
             List<double> result = new List<double>();
-            result.Add(velStart);
-            for (double i = velStart; i < velEnd; i++)
+            for (double i = velStart; i <= velEnd; i += step)
             {
-                result.Add(velStart + step);
-                velStart += step;
+                result.Add(i);
             }
+            if (result[result.Count - 1] != velEnd)
+                result.Add(velEnd);
+
             return result.ToArray();
         }
         public void SaveTable(string[] tableStrings)
