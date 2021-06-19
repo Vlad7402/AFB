@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AFB.Desktop"
         mc:Ignorable="d"
-        Title="TableView" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="TableView" Height="450" Width="450">
+    <StackPanel>
+        <ListView x:Name="LVTable">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Argument}">Значения Х</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Value}">Значения Y</GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </StackPanel>
 </Window>

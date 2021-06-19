@@ -334,14 +334,11 @@ namespace AFB.Desktop
                 var coordinateX = ((e.GetPosition((IInputElement)sender).X - CanGraphicFild.ActualWidth / 2) 
                                     / CanGraphicFild.ActualWidth * maxX) * 2;
                 files.SaveExpression(coordinateX, coordinateX + 0.5, 1, TBFunction.Text);
-                var expression = new logic.Expression(this);
-                TBCurrentX.Text = (expression.ValuemsOfX[0]).ToString();
-                TBCurrentY.Text = (expression.ValuemsOfY[0]).ToString();
                 try
                 {
-                    //var expression = new logic.Expression(this);
-                    //TBCurrentX.Text = (expression.ValuemsOfX[0]).ToString();
-                    //TBCurrentY.Text = (expression.ValuemsOfY[0]).ToString();
+                    var expression = new logic.Expression(this);
+                    TBCurrentX.Text = (expression.ValuemsOfX[0]).ToString();
+                    TBCurrentY.Text = (expression.ValuemsOfY[0]).ToString();
                 }
                 catch (Exception)
                 {
@@ -355,6 +352,17 @@ namespace AFB.Desktop
         {
             TBCurrentX.Text = string.Empty;
             TBCurrentY.Text = string.Empty;
+        }
+
+        private void ShowTable(object sender, RoutedEventArgs e)
+        {
+            if (isGrapticAvailable)
+            {
+                GetExpression(null, null);
+                var expression = new logic.Expression(this);
+                var table = new TableView(new logic.Table(expression.ValuemsOfX, expression.ValuemsOfY));
+                table.Show();
+            }
         }
     }
 }
