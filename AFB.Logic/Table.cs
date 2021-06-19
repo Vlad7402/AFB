@@ -2,9 +2,18 @@
 
 namespace AFB.logic
 {
-    public static class Table
+    public class Table
     {
-        public static string[] GetTable(double[] velumesOfX, double[] velumesOfY)
+        public int Lenght { get; private set; }
+        public double[] Arguments { get; private set; }
+        public double[] Values { get; private set; }
+        public Table(double[] arguments, double[] values)
+        {
+            this.Arguments = arguments;
+            this.Values = values;
+            Lenght = Arguments.Length;
+        }
+        public static string[] GetStringsTable(double[] velumesOfX, double[] velumesOfY)
         {
             List<string> tableStrings = new List<string>();
             int longestX = GetLongestNum(velumesOfX);

@@ -16,8 +16,13 @@
             string input = File.ReadAllText("input.txt");
             input = input.ToLower();
             if (IsInafCuters(input)) return input.Split(new char[] { '|' });
-            else writer.PrintError("Ошибка: в фаёле отсутствуют все необходимые компoненты.");
+            else writer.PrintError("Ошибка: в файле отсутствуют все необходимые компoненты.");
             return null;
+        }
+        public void SaveExpression(double xStart, double xEnd, double xStep, string function)
+        {
+            var functionToSave = function + '|' + xStart.ToString() + '|' + xEnd.ToString() + '|' + xStep.ToString();
+            File.WriteAllText("input.txt", functionToSave);
         }
         private bool IsInafCuters(string input)
         {
@@ -37,17 +42,19 @@
         }
         public double DoubleParser(string input)
         {
-            if (!double.TryParse(input, out double result)) writer.PrintError("Ошибка: невозможно преобразовать значение X начальное, X конечное или шаг в нужный формат.");
+            if (!double.TryParse(input, out double result)) throw new Exception("Ошибка: невозможно преобразовать значение X начальное, X конечное или шаг в нужный формат.");
             return result;
         }
         public double[] GetArgumentVels(double velStart, double velEnd, double step)
         {
             List<double> result = new List<double>();
-            for (double i = velStart; i < velEnd; i++)
+            for (double i = velStart; i <= velEnd; i += step)
             {
-                result.Add(velStart + step);
-                velStart += step;
+                result.Add(i);
             }
+            if (result[result.Count - 1] != velEnd)
+                result.Add(velEnd);
+
             return result.ToArray();
         }
         public void SaveTable(string[] tableStrings)

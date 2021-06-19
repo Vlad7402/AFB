@@ -104,26 +104,24 @@ namespace AFB.logic
 
                 else if (char.IsDigit(input[i]))
                 {
-                    string num = string.Empty;
-                    if (IsPrefix(i, input)) num += '-';
-
-                    while (char.IsDigit(input[i]) || input[i] == '.')
-                    {
-                        num += input[i];
-                        i++;
-                        if (i == input.Length) break;
-                    }
-                    num += " ";
-                    i--;
-                    nums.Push(double.Parse(num));
+                    nums.Push(GetNumFromString(input, ref i));
                 }
                 else if (IsOperation(input[i]))
                 {
-                    double firstNum = nums.Pop();
-                    double secNum = 0;
-                    if (!IsOperationUnar(input[i])) secNum = nums.Pop();
+                    if (input[i] == '-' && i + 1 != input.Length &&
+                        input[i + 1] == 'x' || char.IsDigit(input[i + 1]))
+                    {
+                        i++;
+                        nums.Push(GetNumFromString(input, ref i));
+                    }
+                    else
+                    {
+                        double firstNum = nums.Pop();
+                        double secNum = 0;
+                        if (!IsOperationUnar(input[i])) secNum = nums.Pop();
 
-                    nums.Push(GetOperationResult(firstNum, secNum, input[i]));
+                        nums.Push(GetOperationResult(firstNum, secNum, input[i]));
+                    }
                 }
             }
             return nums.Peek();
@@ -158,11 +156,11 @@ namespace AFB.logic
                 case '-': result = secNum - firstNum; break;
                 case '*': result = secNum * firstNum; break;
                 case '/': if (IsDevisionAvaliable(firstNum)) result = secNum / firstNum; break;
-                case 's': Math.Sin(firstNum); break;
-                case 'c': Math.Cos(firstNum); break;
-                case 't': Math.Tan(firstNum); break;
-                case 'l': Math.Log(firstNum); break;
-                case '!': if (IsFactorialAvaliable(firstNum)) GetFactorial(firstNum); break;
+                case 's': result = Math.Sin(firstNum * Math.PI / 180); break;
+                case 'c': result = Math.Cos(firstNum * Math.PI / 180); break;
+                case 't': result = Math.Tan(firstNum * Math.PI / 180); break;
+                case 'l': result = Math.Log(firstNum); break;
+                case '!': if (IsFactorialAvaliable(firstNum)) result = GetFactorial(firstNum); break;
                 case '^': result = Math.Pow(secNum, firstNum); break;
             }
             return result;
@@ -171,16 +169,12 @@ namespace AFB.logic
         {
             if (val != 0) return true;
             else
-            {
-                writer.PrintError("Ошибка: деление на 0");
-                Environment.Exit(0);
-                return false;
-            }
+                throw new Exception("Деление на ноль");
         }
         private double GetFactorial(double val)
         {
-            double result = 1;
-            for (int i = 1; i < val; i++)
+            int result = 1;
+            for (int i = 1; i <= (int)val; i++)
             {
                 result *= i;
             }
@@ -188,7 +182,7 @@ namespace AFB.logic
         }
         private bool IsFactorialAvaliable(double val)
         {
-            if (val > 150) return true;
+            if (val < 150) return true;
             else
             {
                 writer.PrintError("Ошибка: превышение максималного значения для факториала(150) или значение равно 0");
@@ -241,15 +235,30 @@ namespace AFB.logic
         }
         public bool DoesEndExist(double velStart, double velEnd, double step)
         {
-            if (velStart < velEnd && Math.Sign(step) == -1) writer.PrintError("Ошибка: количество значений X превышает 1000");
-            else if (velStart > velEnd && Math.Sign(step) == 1) writer.PrintError("Ошибка: количество значений X превышает 1000");
-            else if (Math.Sign(step) == 0) writer.PrintError("Ошибка: количество значений X превышает 1000");
-            for (double i = velStart; i < velEnd; i++)
+            if (velStart < velEnd && Math.Sign(step) == -1) throw new Exception("Ошибка: количество значений X превышает 100000");
+            else if (velStart > velEnd && Math.Sign(step) == 1) throw new Exception("Ошибка: количество значений X превышает 100000");
+            else if (Math.Sign(step) == 0) throw new Exception("Ошибка: количество значений X превышает 100000");
+            for (int i = 0; velStart < velEnd; i++)
             {
                 velStart += step;
-                if (i > 1000) writer.PrintError("Ошибка: количество значений X превышает 1000");
+                if (i > 100000) throw new Exception("Ошибка: количество значений X превышает 100000");
             }
             return true;
+        }
+        private double GetNumFromString(string input, ref int ID)
+        {
+            string num = string.Empty;
+            if (IsPrefix(ID, input)) num += '-';
+
+            while (char.IsDigit(input[ID]) || input[ID] == '.')
+            {
+                num += input[ID];
+                ID++;
+                if (ID == input.Length) break;
+            }
+            num += " ";
+            ID--;
+            return double.Parse(num);
         }
         private static bool IsOperationCheking(char operation)
         {
