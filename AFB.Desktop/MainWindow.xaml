@@ -13,7 +13,7 @@
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
         <Canvas x:Name="CanInputPart" Grid.Row="0" Grid.Column="0" Margin="0,0,0,1">
-            <ScrollBar x:Name="SBZoomMain" Height="100" Canvas.Left="270" Canvas.Top="80" Width="20" Minimum="0.1" Maximum="10" Value="10" SmallChange="0.1" LargeChange="0.5" IsMouseCaptureWithinChanged="SBZoomChanged">
+            <ScrollBar x:Name="SBZoomMain" Height="100" Canvas.Left="270" Canvas.Top="80" Width="20" Minimum="0.1" Maximum="10" Value="1" SmallChange="0.1" LargeChange="0.5" IsMouseCaptureWithinChanged="SBZoomChanged">
                 <ScrollBar.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -32,9 +32,9 @@
             <TextBox x:Name="TBFunction" Text="y=c x" Canvas.Left="113" Canvas.Top="9" Width="93"/>
             <TextBlock Height="17" Canvas.Left="10" Canvas.Top="10" Width="103" Text="Введите функцию:"/>
             <TextBlock Height="17" Canvas.Left="230" Canvas.Top="9" Width="175" Text="Введите начальное значение x:"/>
-            <TextBox x:Name="TBXStart" Text="-9" Canvas.Left="405" Canvas.Top="9" Width="40"/>
+            <TextBox x:Name="TBXStart" Text="-90" Canvas.Left="405" Canvas.Top="9" Width="40"/>
             <TextBlock Height="17" Canvas.Left="470" Canvas.Top="10" Width="168" Text="Введите конечное значение x:"/>
-            <TextBox x:Name="TBXEnd" Text="18" Canvas.Left="638" Canvas.Top="9" Width="40"/>
+            <TextBox x:Name="TBXEnd" Text="180" Canvas.Left="638" Canvas.Top="9" Width="40"/>
             <TextBlock Height="17" Canvas.Left="706" Canvas.Top="9" Width="136" Text="Введите шаг значений x:"/>
             <TextBox x:Name="TBXStep" Text="1" Canvas.Left="847" Canvas.Top="9" Width="40"/>
             <Button x:Name="BTCount" Height="49" Width="77" Canvas.Left="10" Canvas.Top="32" Content="Посчитать"/>
@@ -50,7 +50,7 @@
             <TextBlock x:Name="TBYStart" Height="17" Canvas.Left="113" Canvas.Top="86" Width="136"/>
             <TextBlock x:Name="TBError" Height="61" Canvas.Left="550" Canvas.Top="42" Width="320" Background="Red" TextWrapping="Wrap" Visibility="Hidden"/>
             <Button x:Name="BTClearError" Height="29" Width="320" Canvas.Left="550" Canvas.Top="113" Content="Удалить сообщение об ошибке" Background="Tomato" Visibility="Hidden"/>
-            <ScrollBar x:Name="SBZoomX" Height="100" Canvas.Left="270" Canvas.Top="140" Width="20"  Minimum="0.1" Maximum="10" Value="10" SmallChange="0.1" LargeChange="0.5" IsMouseCaptureWithinChanged="SBZoomChanged">
+            <ScrollBar x:Name="SBZoomX" Height="100" Canvas.Left="270" Canvas.Top="140" Width="20"  Minimum="0.1" Maximum="10" Value="1" SmallChange="0.1" LargeChange="0.5" IsMouseCaptureWithinChanged="SBZoomChanged">
                 <ScrollBar.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -70,6 +70,7 @@
                     </TransformGroup>
                 </ScrollBar.RenderTransform>
             </ScrollBar>
+            <Button x:Name="BTCount_Copy" Height="26" Width="185" Canvas.Left="270" Canvas.Top="150" Content="Представить в таблице" Click="ShowTable"/>
         </Canvas>
         <DockPanel Grid.Row="1" Grid.Column="0" >
             <Border BorderBrush="Black" BorderThickness="1" Height="auto" Margin="10,29,10,10">

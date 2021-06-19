@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AFB.Logic", "AFB.Logic\AFB.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AFB.Desktop", "AFB.Desktop\AFB.Desktop.csproj", "{5FF07EDC-0649-4C7C-A165-253281739096}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableView", "TableView\TableView.csproj", "{0C45424F-E5B1-4F0E-88FC-EB446E593600}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{5FF07EDC-0649-4C7C-A165-253281739096}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FF07EDC-0649-4C7C-A165-253281739096}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FF07EDC-0649-4C7C-A165-253281739096}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0C45424F-E5B1-4F0E-88FC-EB446E593600}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C45424F-E5B1-4F0E-88FC-EB446E593600}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C45424F-E5B1-4F0E-88FC-EB446E593600}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C45424F-E5B1-4F0E-88FC-EB446E593600}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
